@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    // Object parameters
-    [SerializeField] private float cooldown = 1f;
-    [SerializeField] private int maxhealth = 10;
-    [SerializeField] private int projDamage = 0;
-    [SerializeField] private float projSpeed = 1f;
     private float timer = 0f;
     private int projHealth = 1;
     // References
@@ -19,7 +14,6 @@ public class Turret : MonoBehaviour
     void Start()
     {
         stats = GetComponent<Stats>();
-        stats.SetHealth(maxhealth);
     }
 
     // Update is called once per frame
@@ -27,7 +21,7 @@ public class Turret : MonoBehaviour
     {
         FindTarget();
         timer += Time.deltaTime;
-        if (timer > cooldown){
+        if (timer > stats.cooldown){
             Shoot();
             timer = 0f;
         }
@@ -62,11 +56,11 @@ public class Turret : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
         // Adjust projectile direction and speed
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        rb.velocity = direction * projSpeed; // Set the projectile's final velocity
+        rb.velocity = direction * stats.projectileSpeed; // Set the projectile's final velocity
 
         Stats projStat = projectile.GetComponent<Stats>();
-        projStat.damage = projDamage;
-        projStat.speed = projSpeed;
+        projStat.damage = stats.projectileDamage;
+        projStat.speed = stats.projectileSpeed;
         projStat.health = projHealth;
 
         // Play Shooting Sound
