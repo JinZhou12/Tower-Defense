@@ -8,6 +8,9 @@ public class Stats : MonoBehaviour
     public int health;
     public int damage;
     public float speed;
+    public float cooldown;
+    public int projectileDamage;
+    public float projectileSpeed;
 
     public void SetHealth(int number){
         health = number;
