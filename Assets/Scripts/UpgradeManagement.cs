@@ -25,6 +25,8 @@ public class UpgradeManagement : MonoBehaviour
     private Color unpurchasableColor = new Color(224,224,224,225);
     // References 
     private GameObject upgradeMenu;
+    public BoxCollider2D offTrigger;
+    public PolygonCollider2D onTrigger;
     private Image[] subUpgradeIcons = new Image[3];
     private TextMeshProUGUI[] subUpgradeCosts = new TextMeshProUGUI[3];
 
@@ -43,6 +45,9 @@ public class UpgradeManagement : MonoBehaviour
         UpdateUpgrade(0);
         UpdateUpgrade(1);
         UpdateUpgrade(2);
+        // Setting trigger boxes
+        offTrigger.enabled = true;
+        onTrigger.enabled = false;
     }
 
     private void UpdateUpgrade(int upgradePathInd){
@@ -83,22 +88,22 @@ public class UpgradeManagement : MonoBehaviour
             // Damage
             case 1:
                 stat.damage += (int)amountChange;
-                Debug.Log(string.Format("Damage increased to {0}", stat.damage));
+                // Debug.Log(string.Format("Damage increased to {0}", stat.damage));
                 return;
             // Projectile Damage
             case 2:
                 stat.projectileDamage += (int)amountChange;
-                Debug.Log(string.Format("Proj Damage increased to {0}", stat.projectileDamage));
+                // Debug.Log(string.Format("Proj Damage increased to {0}", stat.projectileDamage));
                 return;
             // Attack Speed
             case 3:
                 stat.cooldown -= amountChange;
-                Debug.Log(string.Format("Cooldown increased to {0}", stat.cooldown));
+                // Debug.Log(string.Format("Cooldown increased to {0}", stat.cooldown));
                 return;
             // Projectile Speed
             case 4:
                 stat.projectileSpeed += amountChange;
-                Debug.Log(string.Format("Proj Speed increased to {0}", stat.projectileSpeed));
+                // Debug.Log(string.Format("Proj Speed increased to {0}", stat.projectileSpeed));
                 return;
         };
     }
@@ -106,8 +111,16 @@ public class UpgradeManagement : MonoBehaviour
     void Update() {
         // Deactivate menu if clicked away
         if (Input.GetMouseButtonDown(0)) {
-            if (selected) upgradeMenu.SetActive(true);
-            else upgradeMenu.SetActive(false);
+            if (selected) {
+                offTrigger.enabled = false;
+                onTrigger.enabled = true;
+                upgradeMenu.SetActive(true);
+            }
+            else {
+                offTrigger.enabled = true;
+                onTrigger.enabled = false;
+                upgradeMenu.SetActive(false);
+            }
         }
 
         // Toggle upgrades on and off based on current money
@@ -124,7 +137,11 @@ public class UpgradeManagement : MonoBehaviour
         }
     }
 
-    public void SetSelect(bool value){
-        selected = value;
+    private void OnMouseOver() {
+        selected = true;
+    }
+
+    private void OnMouseExit() {
+        selected = false;
     }
 }
