@@ -11,11 +11,13 @@ public class EnemyPath : MonoBehaviour
 
     private Transform target;
     private int pathIndex = 0;
+    private Stats stats;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameManager.current.path[pathIndex];
+        stats = GetComponent<Stats>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class EnemyPath : MonoBehaviour
             if (pathIndex == GameManager.current.path.Length)
             {
                 Destroy(gameObject);
+                GameManager.current.ReduceLife(stats.damage);
                 return;
             }
             else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -48,6 +49,11 @@ public class GameManager : MonoBehaviour
     public void ReduceLife(int amount){
         life -= amount;
         lifeUI.transform.Find("LifeText").GetComponent<TextMeshProUGUI>().text = life.ToString();
+
+        if (life <= 0) {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
     }
 
     public void SetBuyTower(ShopItem shopItem){
