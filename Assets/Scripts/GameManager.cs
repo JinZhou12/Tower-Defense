@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public int money = 100;
     public GameObject moneyUI;
     public GameObject shopUI;
+    public Transform startPoint;
+    public Transform[] path; 
     // Start is called before the first frame update
     private void Awake() {
         current = this;
