@@ -1262,7 +1262,7 @@ MonoBehaviour:
   speed: 0
   cooldown: 2
   projectileDamage: 5
-  projectileSpeed: 1.5
+  projectileSpeed: 10
 --- !u!114 &7581137478106747527
 MonoBehaviour:
   m_ObjectHideFlags: 0

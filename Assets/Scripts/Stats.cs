@@ -28,6 +28,7 @@ public class Stats : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log(other.gameObject);
         Stats otherStat = other.GetComponent<Stats>();
         if (friendly != otherStat.friendly){
             this.Damage(otherStat.damage);
